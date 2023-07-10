@@ -13,8 +13,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        //navigation bar background and accessories color
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().backgroundColor = UIColor(red: 25/255, green: 64/255, blue: 167/255, alpha: 1.0)
+
+        //navigation bar title with white text
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
         return true
+    }
+    
+    private func setupDefaultSettings() {
+        
+        let userDefaults = UserDefaults.standard
+        if userDefaults.value(forKey: "unit") == nil {
+            userDefaults.set(Unit.fahrenheit.rawValue, forKey: "unit")
+        }
     }
 
     // MARK: UISceneSession Lifecycle
