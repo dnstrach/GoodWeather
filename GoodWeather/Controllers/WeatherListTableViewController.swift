@@ -10,15 +10,24 @@ import UIKit
 class WeatherListTableViewController: UITableViewController, AddWeatherDelegate {
     
     private var weatherListViewModel = WeatherListViewModel()
-    private var lastUnitSelection: Unit!
+    //private var lastUnitSelection: Unit!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userDefaults = UserDefaults.standard
-        if let value = userDefaults.value(forKey: "unit") as? String {
-            self.lastUnitSelection = Unit(rawValue: value)!
-        }
+//        let userDefaults = UserDefaults.standard
+//        if let value = userDefaults.value(forKey: "unit") as? String {
+//            self.lastUnitSelection = Unit(rawValue: value)!
+//        }
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        //change TVC background and text color including status bar
+        let appearance = UINavigationBarAppearance()
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        appearance.backgroundColor = UIColor(red: 25/255, green: 64/255, blue: 167/255, alpha: 1.0)
+        self.navigationItem.standardAppearance = appearance
+        self.navigationItem.scrollEdgeAppearance = appearance
         
         /*
          //here for testing -->  code moved to View Model
@@ -33,15 +42,6 @@ class WeatherListTableViewController: UITableViewController, AddWeatherDelegate 
             }
         }
          */
-        
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        //change TVC background and text color including status bar
-        let appearance = UINavigationBarAppearance()
-        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        appearance.backgroundColor = UIColor(red: 25/255, green: 64/255, blue: 167/255, alpha: 1.0)
-        self.navigationItem.standardAppearance = appearance
-        self.navigationItem.scrollEdgeAppearance = appearance
 
     }
     

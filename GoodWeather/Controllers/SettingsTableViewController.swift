@@ -74,7 +74,7 @@ class SettingsTableViewController: UITableViewController {
             cell.accessoryType = .none
         }
         
-        print(settingsViewModel.selectedUnit)
+        //print(settingsViewModel.selectedUnit)
         
         return cell
     }

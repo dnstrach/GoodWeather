@@ -7,67 +7,94 @@
 
 import Foundation
 
-class WeatherListViewModel {
+struct WeatherListViewModel {
     
-    private var weatherViewModels = [WeatherViewModel]()
+    private(set) var weatherViewModels = [WeatherViewModel]()
     
-    func addWeatherViewModel(_ vm: WeatherViewModel) {
-        weatherViewModels.append(vm)
+    mutating func addWeatherViewModel(_ vm: WeatherViewModel) {
+        self.weatherViewModels.append(vm)
     }
     
     func numberOfRows(_ section: Int) -> Int {
-        return weatherViewModels.count
+        return self.weatherViewModels.count
     }
     
     func modelAt(_ index: Int) -> WeatherViewModel {
-        return weatherViewModels[index]
+        return self.weatherViewModels[index]
     }
     
-    private func toCelsius() {
+    mutating private func toCelsius() {
+        
+       weatherViewModels = weatherViewModels.map { vm in
+            
+//           let weatherModel = vm
+//           weatherModel.temperature = (weatherModel.temperature - 32) * 5/9
+            var weatherModel = vm
+            weatherModel.currentTemperature.temperature = (weatherModel.currentTemperature.temperature - 32) * 5/9
+            return weatherModel
+            
+        }
+    }
+    
+    mutating private func toFahrenheit() {
         
         weatherViewModels = weatherViewModels.map { vm in
-            let weatherModel = vm
-            weatherModel.temperature = (weatherModel.temperature - 32) * 5/9
+            
+//            let weatherModel = vm
+//            weatherModel.temperature = (weatherModel.temperature * 9/5) + 32
+            var weatherModel = vm
+            weatherModel.currentTemperature.temperature = (weatherModel.currentTemperature.temperature * 9/5) + 32
             return weatherModel
+            
         }
-    }
-    
-    private func toFahrenheit() {
         
-        weatherViewModels = weatherViewModels.map({ vm in
-            let weatherModel = vm
-            weatherModel.temperature = (weatherModel.temperature * 9/5) + 32
-            return weatherModel
-        })
     }
     
-    func updateUnit(to unit: Unit) {
+    mutating func updateUnit(to unit: Unit) {
+        
         switch unit {
-        case .celsius:
-            toCelsius()
-        case .fahrenheit:
-            toFahrenheit()
+            case .celsius:
+                toCelsius()
+            case .fahrenheit:
+                toFahrenheit()
         }
+        
     }
+    
 }
 
-//can be a separate file
-class WeatherViewModel {
+//class WeatherViewModel {
+struct WeatherViewModel: Decodable {
     
-    let weather: WeatherResponse
+    //let weather: WeatherResponse
+    let name: String
+    //var temperature: Double
+    var currentTemperature: TemperatureViewModel
+    
+//    init(weather: WeatherResponse) {
+//        self.weather = weather
+//        temperature = weather.main.temp
+    
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case currentTemperature = "main"
+    }
+    
+//    var city: String {
+//        return weather.name
+//    }
+    
+}
+
+struct TemperatureViewModel: Decodable {
+    
     var temperature: Double
+    let temperatureMin: Double
+    let temperatureMax: Double
     
-    init(weather: WeatherResponse) {
-        self.weather = weather
-        temperature = weather.main.temp
+    private enum CodingKeys: String, CodingKey {
+        case temperature = "temp"
+        case temperatureMin = "temp_min"
+        case temperatureMax = "temp_max"
     }
-    
-    var city: String {
-        return weather.name
-    }
-    
-    //    var temperature: Double {
-    //        return weather.main.temp
-    //    }
-    
 }

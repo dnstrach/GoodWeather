@@ -116,7 +116,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cityTextField" destination="H8H-hC-r26" id="PTv-OS-9Ig"/>
+                        <outlet property="cityTextField" destination="H8H-hC-r26" id="X6F-7b-mkn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dm3-uk-wXQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
